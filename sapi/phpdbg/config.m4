@@ -30,13 +30,16 @@ if test "$PHP_PHPDBG" != "no"; then
     AS_CASE([$with_readline],
       [shared,*|shared],[AC_MSG_RESULT([disabled (depends on static ext/readline)])],[
       AC_MSG_RESULT([yes, readline])
-      PHP_PHPDBG_CFLAGS="$PHP_PHPDBG_CFLAGS -DHAVE_PHPDBG_READLINE"
+      AC_DEFINE(HAVE_PHPDBG_READLINE, 1, [ ])
+      PHPDBG_EXTRA_LIBS="$PHP_READLINE_LIBS"
     ])
   elif test -n "$with_libedit" && test "$with_libedit" != "no"; then
     AS_CASE([$with_libedit],
       [shared,*|shared],[AC_MSG_RESULT([disabled (depends on static ext/readline)])],[
       AC_MSG_RESULT([yes, libedit])
-      PHP_PHPDBG_CFLAGS="$PHP_PHPDBG_CFLAGS -DHAVE_PHPDBG_READLINE"
+      AC_DEFINE(HAVE_PHPDBG_READLINE, 1, [ ])
+      # TODO: link editline from ext/readline.
+      PHPDBG_EXTRA_LIBS="$PHP_READLINE_LIBS"
     ])
   else
     AC_MSG_RESULT([disabled (depends on static ext/readline)])
