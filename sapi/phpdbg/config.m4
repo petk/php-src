@@ -25,24 +25,28 @@ if test "$PHP_PHPDBG" != "no"; then
   PHP_PHPDBG_CFLAGS="-D_GNU_SOURCE -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1"
   PHP_PHPDBG_FILES="phpdbg.c phpdbg_parser.c phpdbg_lexer.c phpdbg_prompt.c phpdbg_help.c phpdbg_break.c phpdbg_print.c phpdbg_bp.c phpdbg_list.c phpdbg_utils.c phpdbg_info.c phpdbg_cmd.c phpdbg_set.c phpdbg_frame.c phpdbg_watch.c phpdbg_btree.c phpdbg_sigsafe.c phpdbg_io.c phpdbg_out.c"
 
-  AC_MSG_CHECKING([for readline integration in phpdbg])
   if test -n "$with_readline" && test "$with_readline" != "no"; then
-    AS_CASE([$with_readline],
-      [shared,*|shared],[AC_MSG_RESULT([disabled (depends on static ext/readline)])],[
-      AC_MSG_RESULT([yes, readline])
-      AC_DEFINE(HAVE_PHPDBG_READLINE, 1, [ ])
-      PHPDBG_EXTRA_LIBS="$PHP_READLINE_LIBS"
-    ])
-  elif test -n "$with_libedit" && test "$with_libedit" != "no"; then
-    AS_CASE([$with_libedit],
-      [shared,*|shared],[AC_MSG_RESULT([disabled (depends on static ext/readline)])],[
-      AC_MSG_RESULT([yes, libedit])
-      AC_DEFINE(HAVE_PHPDBG_READLINE, 1, [ ])
-      # TODO: link editline from ext/readline.
-      PHPDBG_EXTRA_LIBS="$PHP_READLINE_LIBS"
-    ])
+    PHP_SETUP_EDIT([],[
+      PHPDBG_EXTRA_LIBS="$PHPDBG_EXTRA_LIBS $EDIT_LIBS"
+
+      PHP_PHPDBG_CFLAGS="$PHP_PHPDBG_CFLAGS $EDIT_CFLAGS"
+
+      # Add -Wno-strict-prototypes for Clang because of upstream library issues.
+      # TODO: this can be removed probably for current libedit versions.
+      PHP_PHPDBG_CFLAGS="$PHP_PHPDBG_CFLAGS -Wno-strict-prototypes"
+
+      AC_DEFINE([HAVE_PHPDBG_READLINE],[1],[Whether phpdbg has readline integration])
+      AC_DEFINE([HAVE_LIBEDIT],[1],[Whether libedit library is available])
+      phpdbg_has_readline=yes
+    ],[phpdbg_has_readline=no])
+  fi
+  AC_MSG_CHECKING([whether to enable readline in phpdbg])
+  if test "$phpdbg_has_readline" = "yes"; then
+    AC_MSG_RESULT([enabled (using libedit)])
+  elif test "$phpbg_has_readline" = "no"; then
+    AC_MSG_RESULT([disabled (libedit not installed)])
   else
-    AC_MSG_RESULT([disabled (depends on static ext/readline)])
+    AC_MSG_RESULT([disabled (depends on ext/readline)])
   fi
 
   AC_CACHE_CHECK([for userfaultfd faulting on write-protected memory support], ac_cv_phpdbg_userfaultfd_writefault, AC_COMPILE_IFELSE([AC_LANG_SOURCE([[
