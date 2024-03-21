@@ -6,21 +6,17 @@ phpincludedir = $(includedir)/php
 phpbuilddir = $(libdir)/build
 
 BUILD_FILES = \
+	scripts/phpize.m4 \
+	build/libtool.m4 \
+	build/ltmain.sh \
 	build/ax_check_compile_flag.m4 \
 	build/ax_gcc_func_attribute.m4 \
-	build/gen_stub.php \
-	build/libtool.m4 \
-	build/lt~obsolete.m4 \
-	build/ltmain.sh \
-	build/ltoptions.m4 \
-	build/ltsugar.m4 \
-	build/ltversion.m4 \
-	build/Makefile.global \
 	build/php_cxx_compile_stdcxx.m4 \
-	build/php.m4 \
 	build/pkg.m4 \
-	run-tests.php \
-	scripts/phpize.m4
+	build/Makefile.global \
+	build/php.m4 \
+	build/gen_stub.php \
+	run-tests.php
 
 BUILD_FILES_EXEC = \
 	build/shtool \
