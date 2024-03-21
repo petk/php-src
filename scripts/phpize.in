@@ -9,8 +9,24 @@ includedir="`eval echo @includedir@`/php"
 builddir="`pwd`"
 SED="@SED@"
 
-FILES_BUILD="php.m4 shtool libtool.m4 ax_check_compile_flag.m4 ax_gcc_func_attribute.m4 php_cxx_compile_stdcxx.m4 pkg.m4 \
-    config.guess config.sub ltmain.sh Makefile.global gen_stub.php"
+FILES_BUILD=" \
+  ax_check_compile_flag.m4 \
+  ax_gcc_func_attribute.m4 \
+  config.guess \
+  config.sub \
+  gen_stub.php \
+  libtool.m4 \
+  lt~obsolete.m4 \
+  ltmain.sh \
+  ltoptions.m4 \
+  ltsugar.m4 \
+  ltversion.m4 \
+  Makefile.global \
+  php_cxx_compile_stdcxx.m4 \
+  php.m4 \
+  pkg.m4 \
+  shtool \
+  "
 FILES="run-tests*.php"
 CLEAN_FILES="$FILES *.o *.lo *.la .libs/ build/ modules/ \
 	config.nice configure configure.ac \

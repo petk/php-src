@@ -7,6 +7,10 @@ m4_include([build/ax_check_compile_flag.m4])
 m4_include([build/ax_func_which_gethostbyname_r.m4])
 m4_include([build/ax_gcc_func_attribute.m4])
 m4_include([build/libtool.m4])
+m4_include([build/lt~obsolete.m4])
+m4_include([build/ltoptions.m4])
+m4_include([build/ltsugar.m4])
+m4_include([build/ltversion.m4])
 m4_include([build/php_cxx_compile_stdcxx.m4])
 m4_include([build/php.m4])
 m4_include([build/pkg.m4])
@@ -1635,13 +1639,14 @@ AC_SUBST(AR_FLAGS, [cr])
 dnl Only allow AC_PROG_CXX and AC_PROG_CXXCPP if they are explicitly called (by
 dnl PHP_REQUIRE_CXX). Otherwise AC_PROG_LIBTOOL fails if there is no working C++
 dnl compiler.
+dnl TODO: Should this be removed?
 AC_PROVIDE_IFELSE([PHP_REQUIRE_CXX], [], [
   undefine([AC_PROG_CXX])
   AC_DEFUN([AC_PROG_CXX], [])
   undefine([AC_PROG_CXXCPP])
   AC_DEFUN([AC_PROG_CXXCPP], [php_prog_cxxcpp=disabled])
 ])
-AC_PROG_LIBTOOL
+LT_INIT
 
 PHP_SET_LIBTOOL_VARIABLE([--silent])
 

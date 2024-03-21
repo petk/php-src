@@ -171,8 +171,7 @@ locations.
     ├─ ax_*.m4                      # https://github.com/autoconf-archive/autoconf-archive
     ├─ config.guess                 # https://git.savannah.gnu.org/cgit/config.git
     ├─ config.sub                   # https://git.savannah.gnu.org/cgit/config.git
-    ├─ libtool.m4                   # https://git.savannah.gnu.org/cgit/libtool.git
-    ├─ ltmain.sh                    # https://git.savannah.gnu.org/cgit/libtool.git
+    ├─ libtool.m4, lt*              # https://git.savannah.gnu.org/cgit/libtool.git
     ├─ pkg.m4                       # https://gitlab.freedesktop.org/pkg-config/pkg-config
     ├─ shtool                       # https://www.gnu.org/software/shtool/
     └─ ...
